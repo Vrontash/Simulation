@@ -1,25 +1,17 @@
 package src.main.java;
 
 public abstract class Entity {
-    private int x;
-    private int y;
-    public Entity(int x, int y){
-        this.x = x;
-        this.y = y;
-    }
-    public int getX() {
-        return x;
+    private final Coordinates coordinates;
+    public Entity(Coordinates coordinates){
+       this.coordinates = coordinates;
     }
 
-    public void setX(final int x) {
-        this.x = x;
+    public Coordinates getCoordinates() {
+        return coordinates;
     }
 
-    public int getY() {
-        return y;
-    }
-
-    public void setY(final int y) {
-        this.y = y;
+    public void setCoordinates(int x, int y) {
+        this.coordinates.setX(x);
+        this.coordinates.setY(y);
     }
 }
