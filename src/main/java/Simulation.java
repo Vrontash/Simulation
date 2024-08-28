@@ -8,7 +8,11 @@ import java.util.Scanner;
 public class Simulation {
     private static final int X_MAX = 10;
     private static final int Y_MAX = 10;
-    private static final int HERBIVORE_NUM = 3;
+    private static final int HERBIVORE_NUM = 4;
+    private static final int PREDATOR_NUM = 2;
+    private static final int GRASS_NUM = 11;
+    private static final int ROCK_NUM = 6;
+    private static final int TREE_NUM = 9;
     private final Map map;
     private int moveCount;
     private final SimCLI cli;
@@ -52,12 +56,12 @@ public class Simulation {
         cli.renderTurn(map);
     }
     public void createActions(){
-//        initActions.add(new GrassSpawnAction());
-//        initActions.add(new RockSpawnAction());
-//        initActions.add(new TreeSpawnAction());
+        initActions.add(new GrassSpawnAction(GRASS_NUM));
+        initActions.add(new RockSpawnAction(ROCK_NUM));
+        initActions.add(new TreeSpawnAction(TREE_NUM));
         initActions.add(new HerbivoreSpawnAction(HERBIVORE_NUM));
-//        initActions.add(new PredatorSpawnAction());
-//
+        initActions.add(new PredatorSpawnAction(PREDATOR_NUM));
+
 //        turnActions.add(new CreatureMoveAction());
     }
     public void pauseSim(){}
