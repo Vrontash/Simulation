@@ -13,4 +13,8 @@ public class Herbivore extends Creature {
     public void makemove() {
 
     }
+    @Override
+    public String toString(){
+        return "\uD83D\uDC13"; //Chicken emoji
+    }
 }
