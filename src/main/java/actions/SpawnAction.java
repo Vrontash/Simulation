@@ -23,7 +23,7 @@ abstract class SpawnAction<T extends Entity> extends Action {
     private Coordinates getEmptyRandomCoordinates(Map map) {
         Coordinates coord;
         while (true){
-            coord = new Coordinates(new Random().nextInt(map.xMax ), new Random().nextInt(map.yMax ));
+            coord = new Coordinates(new Random().nextInt(map.xMax), new Random().nextInt(map.yMax));
             if (map.isCellEmpty(coord))
                 return coord;
         }
