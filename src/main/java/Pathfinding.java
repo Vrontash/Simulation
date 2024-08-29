@@ -1,22 +1,19 @@
 package src.main.java;
 
-import src.main.java.simElements.objects.Grass;
-
 import java.util.*;
 
-
 public class Pathfinding {
-    private static List<Coordinates> getObstacle(Map map){
+    private static List<Coordinates> getObstacles(Map map, Class<?> typeOfFood){
         List<Coordinates> obstacles =new ArrayList<>();
         for (Coordinates coord: map.coordinatesSet())
-            if (map.getEntity(coord).getClass() != Grass.class)
+            if (map.getEntity(coord).getClass() != typeOfFood)
                 obstacles.add(coord);
         return obstacles;
     }
-    public static List<Coordinates> getNeighbours(Map map, Coordinates coordinates){
+    public static List<Coordinates> getNeighbours(Map map, Coordinates coordinates, Class<?> typeOfFood){
         int x = coordinates.getX();
         int y = coordinates.getY();
-        List<Coordinates> obstacles = getObstacle(map);
+        List<Coordinates> obstacles = getObstacles(map, typeOfFood);
         obstacles.remove(coordinates);
         List<Coordinates> neighbours = new ArrayList<>();
         neighbours.add(new Coordinates(x + 1, y));
@@ -28,22 +25,29 @@ public class Pathfinding {
         neighbours.removeIf(neigh -> neigh.getX() < 0 || neigh.getX() > map.xMax - 1 || neigh.getY() < 0 || neigh.getY() > map.yMax - 1);
         return  neighbours;
     }
-    public static List<Coordinates> BreadthFirstSearch(Map map, Coordinates from, Coordinates to){
+    public static List<Coordinates> BreadthFirstSearch(Map map, Coordinates from,  Class<?> typeOfFood){
         Queue<Coordinates> unvisited = new LinkedList<>();
         unvisited.add(from);
+        List<Coordinates> foodList = new ArrayList<>();
+        for(Coordinates coordinates: map.coordinatesSet())
+            if (map.getEntity(coordinates).getClass() == typeOfFood)
+                foodList.add(coordinates);
         HashMap<Coordinates, Coordinates> stepHistory = new HashMap<>();
         stepHistory.put(from, from);
+        Coordinates nearestGrass = null;
         while (!unvisited.isEmpty()){
             Coordinates currentCoord = unvisited.poll();
-            if (currentCoord == to)
+            if (foodList.contains(currentCoord)){
+                nearestGrass = currentCoord;
                 break;
-            for (Coordinates next: getNeighbours(map, currentCoord))
+            }
+            for (Coordinates next: getNeighbours(map, currentCoord,typeOfFood))
                 if (!stepHistory.containsKey(next)){
                     unvisited.add(next);
                     stepHistory.put(next, currentCoord);
                 }
         }
-        return reconstructPath(stepHistory, from, to);
+        return reconstructPath(stepHistory, from, nearestGrass);
     }
     public static List<Coordinates> reconstructPath(HashMap<Coordinates, Coordinates> stepHistory, Coordinates from, Coordinates to){
         Coordinates current = to;
