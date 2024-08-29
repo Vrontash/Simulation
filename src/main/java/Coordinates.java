@@ -39,4 +39,8 @@ public class Coordinates {
         result = 31 * result + y;
         return result;
     }
+    @Override
+    public String toString() {
+        return "(" + y + ", " + x + ")";
+    }
 }
