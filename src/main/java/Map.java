@@ -1,12 +1,12 @@
 package src.main.java;
 
-import java.util.HashMap;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class Map {
     public int xMax;
     public int yMax;
-    private final HashMap<Coordinates, Entity> map = new HashMap<>();
+    private final ConcurrentHashMap<Coordinates, Entity> map = new ConcurrentHashMap<>();
     public Map(int xMax, int yMax){
         this.xMax = xMax;
         this.yMax = yMax;
@@ -24,6 +24,7 @@ public class Map {
     public void moveEntity(Coordinates from, Coordinates to){
         Entity entity = getEntity(from);
         removeEntity(from);
+        entity.setCoordinates(to.getX(),to.getY());
         addEntity(to, entity);
     }
 
@@ -31,6 +32,7 @@ public class Map {
         return !map.containsKey(coord);
     }
     public Set<Coordinates> coordinatesSet(){
+
         return map.keySet();
     }
 }
