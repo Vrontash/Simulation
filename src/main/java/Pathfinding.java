@@ -62,21 +62,5 @@ public class Pathfinding {
         Collections.reverse(path);
         return path;
     }
-    public static Coordinates findNearestObject(Map map, Coordinates from, Class<?> searchedClass){
-        double minDistance = Double.MAX_VALUE;
-        Coordinates nearest = null;
-        for (Coordinates to : map.coordinatesSet()) {
-            if (to.equals(from)) continue;
-            if (map.getEntity(to).getClass() != searchedClass) continue;
-            double distance = findManhattanDistance(from, to);
-            if (distance < minDistance) {
-                minDistance = distance;
-                nearest = to;
-            }
-        }
-        return nearest;
-    }
-    public static double findManhattanDistance(Coordinates from, Coordinates to){
-        return Math.abs(from.getX() - to.getX())+ Math.abs(from.getY() - to.getY());
-    }
+
 }
